@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "npx -y live-server website"
+    "dev": "npx -y live-server docs"
   },
   "dependencies": {
     "svgo": "^4.0.1"
