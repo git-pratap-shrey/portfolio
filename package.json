@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "dev": "npx -y live-server website"
+  },
   "dependencies": {
     "svgo": "^4.0.1"
   }
