@@ -131,18 +131,41 @@ contactForm.addEventListener('submit', (e) => {
     return;
   }
 
-  // Simulate submission
+  //Formspree ID
+  const FORMSPREE_ID = 'xpqoggpp';
   const btn = document.getElementById('form-submit');
+
   btn.textContent = 'Sending...';
   btn.disabled = true;
 
-  setTimeout(() => {
-    contactForm.reset();
+  fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+    method: 'POST',
+    body: new FormData(contactForm),
+    headers: {
+      'Accept': 'application/json'
+    }
+  }).then(response => {
+    if (response.ok) {
+      contactForm.reset();
+      formSuccess.textContent = "Thanks! I'll get back to you soon. ✓";
+      formSuccess.style.color = '#4ade80';
+      formSuccess.classList.add('show');
+      setTimeout(() => formSuccess.classList.remove('show'), 5000);
+    } else {
+      response.json().then(data => {
+        if (Object.hasOwn(data, 'errors')) {
+          alert(data["errors"].map(error => error["message"]).join(", "));
+        } else {
+          alert("Oops! There was a problem submitting your form");
+        }
+      })
+    }
+  }).catch(error => {
+    alert("Oops! There was a problem submitting your form. Please check your connection.");
+  }).finally(() => {
     btn.textContent = 'Get In Touch →';
     btn.disabled = false;
-    formSuccess.classList.add('show');
-    setTimeout(() => formSuccess.classList.remove('show'), 5000);
-  }, 1200);
+  });
 });
 
 // ===== SHAKE ANIMATION =====
@@ -194,11 +217,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Give it a little buffer before fading out
     setTimeout(() => {
       preloader.classList.add('fade-out');
-      
+
       // Remove from DOM after fade out completes
       setTimeout(() => {
         preloader.style.display = 'none';
-      }, 1000); 
-    }, 3800); 
+      }, 1000);
+    }, 3800);
   }
 });
