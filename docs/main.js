@@ -261,12 +261,12 @@ const initCursor = () => {
 
   const Tail = function (mx, my) {
     this.pList = [];
-    this.pLen = 20; // Slightly longer for premium feel
+    this.pLen = 32; // Longer trail for extra smoothness
     this.mx = mx;
     this.my = my;
     this.destX = mx;
     this.destY = my;
-    this.speed = 1.5;
+    this.speed = 1.45; // Slightly slower follower for a longer trailing effect
     this.updateCrds = function () {
       this.mx += (this.destX - this.mx) / this.speed;
       this.my += (this.destY - this.my) / this.speed;
@@ -278,8 +278,8 @@ const initCursor = () => {
   }
 
   function bzCurve(points, f, t) {
-    if (typeof (f) == 'undefined') f = 0.3;
-    if (typeof (t) == 'undefined') t = 0.6;
+    if (typeof (f) == 'undefined') f = 0.1;
+    if (typeof (t) == 'undefined') t = 1.0;
 
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
@@ -336,12 +336,12 @@ const initCursor = () => {
     timer = setTimeout(() => {
       dot.classList.remove('draw');
       canvas.style.opacity = '0';
-    }, 100);
+    }, 120);
   });
 
   // Animation Loop
-  ctx.strokeStyle = "rgba(13, 13, 13, 0.4)"; // Default blackish
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "rgba(0, 0, 0, 0.7)"; // Darker black
+  ctx.lineWidth = 2.2; // Thicker tail
 
   const animate = () => {
     ctx.clearRect(0, 0, width, height);
@@ -356,13 +356,13 @@ const initCursor = () => {
       }
       
       if (points.length > 2) {
-        bzCurve(points, 0.3, 0.6);
+        bzCurve(points, 0.12, 1.0);
       }
 
       // Move points slightly for "flow" effect
       for (let i = 0; i < tail.pList.length; i++) {
-        tail.pList[i].x -= 0.5;
-        tail.pList[i].y += 0.5;
+        tail.pList[i].x -= 1.0;
+        tail.pList[i].y += 1.0;
       }
 
       while (tail.pList.length > tail.pLen) {

@@ -1248,8 +1248,20 @@ a { text-decoration: none; color: inherit; }
    CUSTOM CURSOR STYLES
    ============================================ */
 
-body, a, button, input[type="submit"] {
-    cursor: none;
+html, body, a, button, input, textarea, .skill-card, .proj-card-visual, [role="button"] {
+    cursor: none !important;
+}
+
+#mouse {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999998;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .dot-box {
@@ -1264,8 +1276,8 @@ body, a, button, input[type="submit"] {
     align-items: center;
     justify-content: center;
     transition: transform 0.5s, width 0.5s, height 0.5s, background-color 0.5s;
-    width: 12px;
-    height: 12px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background-color: var(--yellow);
 }
