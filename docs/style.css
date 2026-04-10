@@ -1243,3 +1243,82 @@ a { text-decoration: none; color: inherit; }
   0% { stroke-dashoffset: var(--line-length); }
   100% { stroke-dashoffset: 0; }
 }
+
+/* ============================================
+   CUSTOM CURSOR STYLES
+   ============================================ */
+
+body, a, button, input[type="submit"] {
+    cursor: none;
+}
+
+.dot-box {
+    pointer-events: none;
+    z-index: 999999;
+    position: fixed;
+    transform: translate(-50%, -50%);
+}
+
+.dot-box .dot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s, width 0.5s, height 0.5s, background-color 0.5s;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--yellow);
+}
+
+.dot-box .dot.draw {
+    transform: scale(0.5);
+}
+
+.dot-box span {
+    transition: transform 0.5s;
+    transform: scale(0);
+    color: var(--black);
+    font-size: 14px;
+    letter-spacing: 0.28px;
+    z-index: 2;
+    text-align: center;
+    font-weight: 700;
+}
+
+.dot-box.active .dot {
+    transform: scale(2);
+    background-color: var(--white);
+    border: 2px solid var(--black);
+}
+
+.dot-box.changeColor .dot {
+    background-color: #fff;
+}
+
+.dot-box.secondary .dot {
+    transform: scale(1);
+    width: 72px;
+    height: 72px;
+}
+
+.dot-box.secondary span {
+    transform: scale(1);
+    display: block;
+}
+
+.dot-box span.next {
+    display: none;
+}
+
+.dot-box.secondary-next span.next {
+    display: block;
+}
+
+.dot-box.secondary-next span.view {
+    display: none;
+}
+
+.dot-box.changeColor.secondary span {
+    color: #242424;
+}
+

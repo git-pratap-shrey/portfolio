@@ -225,3 +225,198 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3800);
   }
 });
+
+// ===== CUSTOM CURSOR =====
+const initCursor = () => {
+  if (window.innerWidth <= 1024) return;
+
+  const dotBox = document.createElement('div');
+  dotBox.id = 'dot-box';
+  dotBox.classList.add('dot-box');
+
+  const dot = document.createElement('div');
+  dot.id = 'dot-item';
+  dot.classList.add('dot');
+
+  const spanView = document.createElement('span');
+  spanView.classList.add('view');
+  spanView.textContent = 'VIEW';
+
+  const spanNext = document.createElement('span');
+  spanNext.classList.add('next');
+  spanNext.textContent = 'NEXT';
+
+  dot.appendChild(spanView);
+  dot.appendChild(spanNext);
+  dotBox.appendChild(dot);
+  document.body.appendChild(dotBox);
+
+  const canvas = document.getElementById("mouse");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  
+  let width = canvas.width = window.innerWidth;
+  let height = canvas.height = window.innerHeight;
+  let tail;
+
+  const Tail = function (mx, my) {
+    this.pList = [];
+    this.pLen = 20; // Slightly longer for premium feel
+    this.mx = mx;
+    this.my = my;
+    this.destX = mx;
+    this.destY = my;
+    this.speed = 1.5;
+    this.updateCrds = function () {
+      this.mx += (this.destX - this.mx) / this.speed;
+      this.my += (this.destY - this.my) / this.speed;
+    };
+  };
+
+  function gradient(a, b) {
+    return (b.y - a.y) / (b.x - a.x);
+  }
+
+  function bzCurve(points, f, t) {
+    if (typeof (f) == 'undefined') f = 0.3;
+    if (typeof (t) == 'undefined') t = 0.6;
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    let m = 0;
+    let dx1 = 0;
+    let dy1 = 0;
+    let dx2 = 0;
+    let dy2 = 0;
+
+    let preP = points[0];
+    for (let i = 1; i < points.length; i++) {
+      let curP = points[i];
+      let nexP = points[i + 1];
+      if (nexP) {
+        m = gradient(preP, nexP);
+        dx2 = (nexP.x - curP.x) * -f;
+        dy2 = dx2 * m * t;
+      } else {
+        dx2 = 0;
+        dy2 = 0;
+      }
+      ctx.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
+      dx1 = dx2;
+      dy1 = dy2;
+      preP = curP;
+    }
+    ctx.stroke();
+  }
+
+  // Mouse Movement
+  let lastX, lastY;
+  let timer;
+
+  document.addEventListener('mousemove', e => {
+    // Dot position
+    dotBox.style.left = e.clientX + 'px';
+    dotBox.style.top = e.clientY + 'px';
+    
+    // Tail destination
+    if (tail) {
+      tail.destX = e.clientX;
+      tail.destY = e.clientY;
+    } else {
+      tail = new Tail(e.clientX, e.clientY);
+    }
+
+    // Show cursor on move
+    canvas.style.opacity = '1';
+    dot.classList.add('draw');
+
+    // Idle timer
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      dot.classList.remove('draw');
+      canvas.style.opacity = '0';
+    }, 100);
+  });
+
+  // Animation Loop
+  ctx.strokeStyle = "rgba(13, 13, 13, 0.4)"; // Default blackish
+  ctx.lineWidth = 1.5;
+
+  const animate = () => {
+    ctx.clearRect(0, 0, width, height);
+
+    if (tail) {
+      tail.updateCrds();
+      tail.pList.push({ x: tail.mx, y: tail.my });
+
+      let points = [];
+      for (let i = 0; i < tail.pList.length; i++) {
+        points.push({ x: tail.pList[i].x, y: tail.pList[i].y });
+      }
+      
+      if (points.length > 2) {
+        bzCurve(points, 0.3, 0.6);
+      }
+
+      // Move points slightly for "flow" effect
+      for (let i = 0; i < tail.pList.length; i++) {
+        tail.pList[i].x -= 0.5;
+        tail.pList[i].y += 0.5;
+      }
+
+      while (tail.pList.length > tail.pLen) {
+        tail.pList.shift();
+      }
+    }
+    requestAnimationFrame(animate);
+  };
+  animate();
+
+  // Hover Interactions
+  const updateHovers = () => {
+    // Links and buttons (Scale up)
+    document.querySelectorAll('a, button, .skill-card').forEach(el => {
+      el.addEventListener('mouseenter', () => dotBox.classList.add('active'));
+      el.addEventListener('mouseleave', () => dotBox.classList.remove('active'));
+    });
+
+    // Project cards (Scale up + VIEW text)
+    document.querySelectorAll('.proj-card-visual').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        dotBox.classList.add('active', 'secondary');
+      });
+      el.addEventListener('mouseleave', () => {
+        dotBox.classList.remove('active', 'secondary');
+      });
+    });
+
+    // Section colors
+    document.querySelectorAll('.dark-section').forEach(section => {
+      section.addEventListener('mouseenter', () => {
+        dotBox.classList.add('changeColor');
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+      });
+      section.addEventListener('mouseleave', () => {
+        dotBox.classList.remove('changeColor');
+        ctx.strokeStyle = "rgba(13, 13, 13, 0.4)";
+      });
+    });
+  };
+  updateHovers();
+
+  // Resize handler
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+};
+
+// Initialize after preloader fades or DOM is ready
+if (document.readyState === 'complete') {
+  initCursor();
+} else {
+  window.addEventListener('load', initCursor);
+}
+
+
