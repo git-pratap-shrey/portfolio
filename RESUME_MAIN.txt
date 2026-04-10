@@ -1,0 +1,116 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[left=0.7in,right=0.7in,top=0.7in,bottom=0.7in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}[\titlerule]
+
+\setlist[itemize]{noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
+
+\begin{document}
+
+%--------------------
+% Header
+%--------------------
+
+\begin{center}
+{\LARGE \textbf{Shrey Pratap}} \\
+
+AI Engineer | GenAI Systems | Backend Developer \\
+
+India \quad | \quad 
+\href{mailto:shreypratapsingh@email.com}{shreypratapsingh@email.com} \quad | \quad
+\href{https://github.com/git-pratap-shrey}{github.com/git-pratap-shrey}
+\end{center}
+
+%--------------------
+% Summary
+%--------------------
+
+\section*{Summary}
+
+AI-focused backend developer building \textbf{LLM-powered and agentic systems}. Experienced in designing \textbf{Retrieval-Augmented Generation (RAG) pipelines}, vector search infrastructure, and \textbf{tool-based LLM architectures}. Developed \textbf{uniAI}, a syllabus-aware AI assistant that retrieves answers from academic PDFs using embeddings and vector databases. Interested in \textbf{GenAI systems, AI agents, LLM infrastructure, and applied machine learning}.
+
+%--------------------
+% Skills
+%--------------------
+
+\section*{Technical Skills}
+
+\textbf{Languages:} Python, C, C++, SQL
+
+\textbf{AI / ML:} Retrieval-Augmented Generation (RAG), Semantic Search, Embeddings, Computer Vision, Object Detection (YOLOv8), Neural Networks (TensorFlow, PyTorch)
+
+\textbf{GenAI Systems:} Agentic AI, MCP (Model Context Protocol), Agentic workflows, Hybrid query routing, Vision-Language Models (VLM), Multimodal pipelines, Context engineering, Prompt engineering
+
+\textbf{Frameworks / Tools:} FastAPI, Django, ChromaDB, Ollama, HuggingFace Transformers, sentence-transformers, OpenCV, PyMuPDF, SQLAlchemy, pytest, Git, GitHub, n8n
+
+\textbf{Models \& APIs:} Gemini API, Ollama (Qwen3, Gemma3, Mistral, LLaVA), YOLOv8 (Ultralytics), Qwen3-Reranker (cross-encoder)
+
+\textbf{Infrastructure:} Vector databases, Local LLM deployment, GPU inference (PyTorch CUDA), CI/CD (GitHub Actions), Docker, SQLite / PostgreSQL
+
+%--------------------
+% Projects
+%--------------------
+
+\section*{Projects}
+
+\noindent
+\textbf{1. LeetCode Notes Automation Platform} \\ % [cite: 151]
+\textit{Automation / GenAI Pipeline / Static Deployment} % [cite: 151]
+\begin{itemize}
+\item \textbf{Automated LLM Ingestion:} Orchestrated n8n workflows to fetch LeetCode submissions via GraphQL, dynamically processing user solutions through LLMs to generate structured Markdown notes. % [cite: 151, 152]
+\item \textbf{Cost-Optimized Execution:} Engineered an idempotent processing system utilizing submission identifiers (\texttt{titleSlug}) and metadata tracking to eliminate duplicate computations and unnecessary LLM API calls. % [cite: 153, 155]
+\item \textbf{Serverless Knowledge Base:} Deployed a static frontend using Quartz and GitHub Pages, providing users with instant, zero-infrastructure access to their personalized note repositories. % [cite: 154]
+\end{itemize}
+\textbf{GitHub:} \href{https://github.com/git-pratap-shrey/leetcode-notes}{github.com/git-pratap-shrey/leetcode-notes}\newline % [cite: 155]
+\textbf{Live Link:} \href{https://git-pratap-shrey.github.io/leetcode-notes/}{https://git-pratap-shrey.github.io/leetcode-notes/} % [cite: 155]
+
+\vspace{8pt}
+
+\noindent
+\textbf{2. uniAI} — \textit{Syllabus-Aware AI Study Assistant} \\ % [cite: 156]
+\textit{GenAI / RAG System} % [cite: 156]
+\begin{itemize}
+\item \textbf{Multi-Stage RAG Architecture:} Orchestrated an end-to-end pipeline across three isolated ChromaDB collections (syllabus, notes, PYQs) with a modular model registry supporting seamless switching between Gemini, Ollama, and Groq. % [cite: 156, 160]
+\item \textbf{Hybrid Routing \& Query Expansion:} Engineered a sub-millisecond, four-tier router (Regex $\rightarrow$ Keyword $\rightarrow$ Embedding $\rightarrow$ LLM fallback) coupled with a three-layer query expansion system to bridge the gap between student terminology and academic text. % [cite: 157, 158]
+\item \textbf{VLM-Powered Data Pipeline:} Automated high-fidelity extraction of complex exam papers using Qwen3-VL, ensuring semantic sectioning and structured JSON outputs under rate-limited environments. % [cite: 157]
+\item \textbf{Precision Retrieval \& DevOps:} Prevented LLM hallucinations by coupling GPU-accelerated cross-encoder reranking (Qwen3) with strict out-of-syllabus gating, validated by a comprehensive CI/CD testing suite using GitHub Actions and pytest. % [cite: 158, 159]
+\end{itemize}
+\textbf{GitHub:} \href{https://github.com/git-pratap-shrey/uniAI}{github.com/git-pratap-shrey/uniAI} % [cite: 160]
+
+\vspace{8pt}
+
+\noindent
+\textbf{3. Aurora Sentinels} — \textit{Vision-Language Environmental Monitoring System} \\ % [cite: 160]
+\textit{Changethon Hackathon, IIT Roorkee | Team: Out-of-Scope} % [cite: 160, 161]
+\begin{itemize}
+\item \textbf{Dual-Provider VLM Pipeline:} Architected a rapid-prototype scene intelligence system utilizing Gemini 2.0 Flash (cloud) and Ollama/LLaVA (local) for contextual threat detection from video frames. % [cite: 161]
+\item \textbf{Multimodal Audio Analysis:} Integrated HuggingFace Transformers and MoviePy to extract and classify audio directly from recorded clips, delivering a functional, award-winning AI system under strict hackathon time constraints. % [cite: 162, 163]
+\end{itemize}
+\textbf{GitHub:} \href{https://github.com/git-pratap-shrey/AURORA-SENTINEL}{github.com/git-pratap-shrey/AURORA-SENTINEL} % [cite: 164]
+
+%--------------------
+% Achievements
+%--------------------
+
+\section*{Achievements}
+
+\begin{itemize}
+\item \textbf{1st Place — Changethon Hackathon, IIT Roorkee} \\
+Led development of Vision-Language AI system \textit{Aurora Sentinels} for environmental monitoring with team \textit{Out-of-Scope}.
+\end{itemize}
+
+% %--------------------
+% % Education
+% %--------------------
+
+% \section*{Education}
+
+% \noindent
+% \textbf{Bachelor's Degree in Computer Science} \\
+% GL. Bajaj Institute of Technology, Greater Noida
+
+\end{document}
