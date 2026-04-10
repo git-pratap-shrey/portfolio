@@ -185,3 +185,20 @@ if (heroTitle) {
 
 console.log('%c✦ Shrey Pratap — Portfolio', 'font-size:16px; font-weight:bold; color:#F5C518;');
 console.log('%cAI Engineer | GenAI Systems | Backend Developer', 'font-size:12px; color:#888;');
+
+// ===== PRELOADER LOGIC =====
+document.addEventListener('DOMContentLoaded', () => {
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    // The longest animation delay is 2.9s + 0.75s animation time = 3.65s
+    // Give it a little buffer before fading out
+    setTimeout(() => {
+      preloader.classList.add('fade-out');
+      
+      // Remove from DOM after fade out completes
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 1000); 
+    }, 3800); 
+  }
+});
