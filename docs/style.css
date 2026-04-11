@@ -450,6 +450,12 @@ a { text-decoration: none; color: inherit; }
   height: 100%;
 }
 
+ .skill-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+ }
+
 .skill-card span {
   font-size: 0.8rem;
   font-weight: 600;
@@ -658,102 +664,199 @@ a { text-decoration: none; color: inherit; }
   color: var(--yellow);
 }
 
-.pv-arrow {
-  color: rgba(255,255,255,0.3);
-  font-size: 1rem;
-}
-
-/* RAG Visual */
-.rag-pipeline {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.rag-node {
-  padding: 8px 20px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.8);
-  text-align: center;
-  min-width: 120px;
-}
-
-.rag-node.query { background: rgba(255,255,255,0.15); font-weight: 600; }
-.rag-node.yellow-node { background: rgba(245,197,24,0.2); color: var(--yellow); border-color: rgba(245,197,24,0.3); }
-.rag-node.rerank { background: rgba(255,255,255,0.05); }
-.rag-node.answer { font-weight: 700; }
-.rag-node.small { font-size: 0.65rem; min-width: 70px; padding: 6px 10px; }
-
-.rag-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.rag-arrow {
-  color: var(--yellow);
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-/* Aurora Visual */
-.aurora-body {
-  gap: 16px;
-}
-
-.aurora-badge {
-  background: rgba(245,197,24,0.15);
-  border: 1px solid rgba(245,197,24,0.3);
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 0.78rem;
-  color: var(--yellow);
-  font-weight: 600;
-  line-height: 1.6;
-}
-
-.aurora-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.aurora-chip {
-  padding: 5px 12px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 100px;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.7);
-}
-
-.aurora-flow {
+/* Generic Project Image Composition */
+.proj-img-container {
+  position: relative;
+  width: 100%;
+  max-width: 693px;
+  height: 462px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 4px;
+  justify-content: center;
 }
 
-.af-node {
-  padding: 7px 14px;
-  background: rgba(255,255,255,0.08);
-  border-radius: 6px;
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.7);
+.proj-base-frame {
+  width: 100%;
+  background: var(--dark-card);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
 }
 
-.af-node.yellow {
-  background: rgba(245,197,24,0.2);
-  color: var(--yellow);
+/* Aspect Ratio Modifiers */
+.proj-base-frame.ar-workflow { aspect-ratio: 1279 / 480; }
+.proj-base-frame.ar-uniai { aspect-ratio: 1024 / 559; }
+
+.proj-base-frame .pv-header {
+  padding: 8px 12px;
 }
 
-.af-arrow {
-  color: rgba(255,255,255,0.3);
-  font-size: 0.9rem;
+.proj-base-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  opacity: 0.8;
+  filter: grayscale(30%);
+  transition: all 0.5s var(--transition);
+}
+
+.proj-img-container:hover .proj-base-frame {
+  z-index: 3;
+  transform: translateY(-40px) scale(1.08);
+  box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+  border-color: var(--yellow);
+}
+
+.proj-img-container:hover .proj-base-frame img {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+.proj-overlay-card {
+  position: absolute;
+  right: -30px;
+  bottom: -20px;
+  width: 300px;
+  height: 485px;
+  background: var(--dark-card);
+  border: 1.5px solid var(--yellow);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  z-index: 2;
+  transform: rotate(3deg) translateY(10px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Second Project Modifier: Landscape Overlay */
+.proj-overlay-card.ar-landscape {
+  width: 485px;
+  height: 277px;
+  right: -40px;
+  bottom: -10px;
+}
+
+.proj-overlay-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s var(--transition);
+}
+
+.proj-img-container:hover .proj-overlay-card {
+  z-index: 1;
+  transform: rotate(-4deg) translateY(60px) translateX(30px) scale(0.9);
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.proj-img-container:hover .proj-overlay-card img {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .proj-img-container {
+    height: 404px;
+  }
+  .proj-overlay-card {
+    width: 185px;
+    height: 277px;
+    right: 0;
+  }
+  .proj-overlay-card.ar-landscape {
+    width: 231px;
+    height: 162px;
+  }
+}
+
+/* Project 2 Specific Size Override (+15% additional width approx) */
+.proj-img-container.p2-wide {
+  max-width: 764px;
+}
+
+.p2-wide .proj-overlay-card.ar-landscape {
+  width: 536px;
+}
+
+@media (max-width: 768px) {
+  .p2-wide .proj-overlay-card.ar-landscape {
+    width: 255px;
+  }
+}
+
+/* Project 3: 3D Flip Card Implementation */
+.flip-card {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 693px;
+  height: 600px;
+  margin: 0 auto;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--dark-card);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+.flip-card-front {
+  z-index: 2;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  border-color: var(--yellow);
+}
+
+.flip-card img {
+  width: 100%;
+  height: calc(100% - 37px); /* Account for pv-header height */
+  object-fit: contain;
+  display: block;
+  background: #0d0d0d; /* Matches dark card background */
+}
+
+.flip-card .pv-header {
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+@media (max-width: 768px) {
+  .flip-card {
+    height: 450px;
+  }
 }
 
 /* ===== ABOUT ===== */
@@ -777,6 +880,19 @@ a { text-decoration: none; color: inherit; }
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: 8px 8px 0px var(--black);
+}
+
+.about-card-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 2px solid var(--black);
+  filter: grayscale(10%);
+  transition: filter var(--transition);
+}
+
+.about-card:hover .about-card-img {
+  filter: grayscale(0%);
 }
 
 .about-card-inner {
